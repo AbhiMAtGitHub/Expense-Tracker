@@ -1,0 +1,20 @@
+# Use minimal Node.js base image
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy only package files first (for better caching)
+COPY package*.json ./
+
+# Install only production dependencies
+RUN npm install --production
+
+# Copy rest of the app
+COPY . .
+
+# Expose the application port
+EXPOSE 4000
+
+# Run the app
+CMD ["npm", "start"]
