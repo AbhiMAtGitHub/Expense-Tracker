@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const routes = require("./routes");
@@ -24,5 +25,7 @@ app.get("/api/break-it", (req, res, next) => {
 app.get("/api/ping", (req, res) => res.status(200).send("pong"));
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+console.log("Starting Expense Tracker API...");
 
 module.exports = app;
