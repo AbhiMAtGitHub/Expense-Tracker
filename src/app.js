@@ -26,6 +26,13 @@ app.get("/api/ping", (req, res) => res.status(200).send("pong"));
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+app.get("/", (req, res) => {
+  res.status(200).send(`
+    <h2>Welcome to the Expense Tracker API</h2>
+    <p>Visit <a href="/api-docs" target="_blank">/api-docs</a> for full Swagger documentation of available API routes.</p>
+  `);
+});
+
 console.log("Starting Expense Tracker API...");
 
 module.exports = app;

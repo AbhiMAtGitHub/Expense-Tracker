@@ -4,6 +4,8 @@ The Expense Tracker API is a robust and secure backend application built using *
 
 This API is designed with best practices and modular architecture suited for production environments and portfolio showcases.
 
+🔗 **Project is Live on**: [https://expense-tracker-n5it.onrender.com/](https://expense-tracker-n5it.onrender.com/)
+
 ---
 
 ## Features
