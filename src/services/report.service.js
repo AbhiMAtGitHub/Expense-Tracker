@@ -1,17 +1,19 @@
+// src/services/report.service.js
 const Transaction = require("../models/transaction.model");
 const mongoose = require("mongoose");
 
-exports.getMonthlySummary = async (userId, year) => {
+exports.getMonthlySummary = async (userId, year, category) => {
   const start = new Date(`${year}-01-01`);
   const end = new Date(`${year}-12-31`);
 
+  const match = {
+    userId: new mongoose.Types.ObjectId(userId),
+    date: { $gte: start, $lte: end },
+  };
+  if (category) match.category = category;
+
   const result = await Transaction.aggregate([
-    {
-      $match: {
-        userId: new mongoose.Types.ObjectId(userId),
-        date: { $gte: start, $lte: end },
-      },
-    },
+    { $match: match },
     {
       $group: {
         _id: {
@@ -32,9 +34,7 @@ exports.getMonthlySummary = async (userId, year) => {
         },
       },
     },
-    {
-      $sort: { _id: 1 },
-    },
+    { $sort: { _id: 1 } },
   ]);
 
   return result.map((entry) => ({
@@ -44,11 +44,12 @@ exports.getMonthlySummary = async (userId, year) => {
   }));
 };
 
-exports.getYearlySummary = async (userId) => {
+exports.getYearlySummary = async (userId, category) => {
+  const match = { userId: new mongoose.Types.ObjectId(userId) };
+  if (category) match.category = category;
+
   const result = await Transaction.aggregate([
-    {
-      $match: { userId: new mongoose.Types.ObjectId(userId) },
-    },
+    { $match: match },
     {
       $group: {
         _id: {
@@ -69,9 +70,7 @@ exports.getYearlySummary = async (userId) => {
         },
       },
     },
-    {
-      $sort: { _id: 1 },
-    },
+    { $sort: { _id: 1 } },
   ]);
 
   return result.map((entry) => ({

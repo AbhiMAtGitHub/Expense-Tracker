@@ -130,3 +130,50 @@ paths:
       responses:
         "200":
           description: Yearly breakdown
+
+  /api/transactions/{id}:
+    put:
+      summary: Update a transaction
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Transaction ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Transaction"
+      responses:
+        "200":
+          description: Transaction updated successfully
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Transaction not found
+
+    delete:
+      summary: Delete a transaction
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Transaction ID
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Transaction deleted successfully
+        "401":
+          description: Unauthorized
+        "404":
+          description: Transaction not found

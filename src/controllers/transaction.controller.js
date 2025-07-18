@@ -10,7 +10,7 @@ const {
 const { setPaginationHeaders } = require("../utils/common");
 const { validateTransaction } = require("../utils/validate");
 
-exports.create = async (req, res, next) => {
+exports.createTransaction = async (req, res, next) => {
   try {
     const payload = req.body;
 
@@ -33,7 +33,8 @@ exports.create = async (req, res, next) => {
 
 exports.getAll = async (req, res, next) => {
   try {
-    const { transactions, meta } = await getTransactions(req.user, req.query);
+    const userId = req.user;
+    const { transactions, meta } = await getTransactions(userId, req.query);
 
     setPaginationHeaders(res, meta);
     res.status(200).json({ success: true, data: transactions });
@@ -44,7 +45,8 @@ exports.getAll = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-    const data = await updateTransaction(req.params.id, req.body, req.user);
+    const userId = req.user;
+    const data = await updateTransaction(req.params.id, req.body, userId);
     res.status(200).json({ success: true, data });
   } catch (err) {
     next(err);
@@ -53,7 +55,8 @@ exports.update = async (req, res, next) => {
 
 exports.remove = async (req, res, next) => {
   try {
-    const data = await deleteTransaction(req.params.id, req.user);
+    const userId = req.user;
+    const data = await deleteTransaction(req.params.id, userId);
     res.status(200).json({ success: true, message: "Deleted" });
   } catch (err) {
     next(err);

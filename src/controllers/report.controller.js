@@ -1,3 +1,4 @@
+// src/controllers/report.controller.js
 const {
   getMonthlySummary,
   getYearlySummary,
@@ -6,9 +7,12 @@ const {
 exports.monthly = async (req, res, next) => {
   try {
     const year = parseInt(req.query.year);
-    if (!year) return res.status(400).json({ message: "Year is required" });
+    if (!year || year < 1970 || year > 2100) {
+      return res.status(400).json({ message: "Invalid or missing year" });
+    }
 
-    const data = await getMonthlySummary(req.user, year);
+    const category = req.query.category;
+    const data = await getMonthlySummary(req.user, year, category);
     res.status(200).json({ success: true, data });
   } catch (err) {
     next(err);
@@ -17,7 +21,8 @@ exports.monthly = async (req, res, next) => {
 
 exports.yearly = async (req, res, next) => {
   try {
-    const data = await getYearlySummary(req.user);
+    const category = req.query.category;
+    const data = await getYearlySummary(req.user, category);
     res.status(200).json({ success: true, data });
   } catch (err) {
     next(err);

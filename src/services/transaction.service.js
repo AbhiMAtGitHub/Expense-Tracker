@@ -13,10 +13,20 @@ exports.createTransaction = async (body, userId) => {
   });
 };
 
+exports.createMultipleTransactions = async (transactions, userId) => {
+  const formatted = transactions.map((txn) => ({
+    ...txn,
+    userId,
+  }));
+
+  return await Transaction.insertMany(formatted);
+};
+
 exports.getTransactions = async (userId, query) => {
   const { limit, offset } = buildPaginationQuery(query);
 
   const filters = { userId };
+
   if (query.type) filters.type = query.type;
   if (query.category) filters.category = query.category;
   if (query.startDate && query.endDate) {
@@ -41,21 +51,14 @@ exports.updateTransaction = async (id, update, userId) => {
     update,
     { new: true }
   );
-  if (!updated) throw new Error("Transaction not found or unauthorized");
+  if (!updated)
+    throw new Error("Transaction not found or you do not have permission.");
   return updated;
 };
 
 exports.deleteTransaction = async (id, userId) => {
   const deleted = await Transaction.findOneAndDelete({ _id: id, userId });
-  if (!deleted) throw new Error("Transaction not found or unauthorized");
+  if (!deleted)
+    throw new Error("Transaction not found or you do not have permission.");
   return true;
-};
-
-exports.createMultipleTransactions = async (transactions, userId) => {
-  const formatted = transactions.map((txn) => ({
-    ...txn,
-    userId,
-  }));
-
-  return await Transaction.insertMany(formatted);
 };
