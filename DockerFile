@@ -1,20 +1,21 @@
-# Use minimal Node.js base image
+# Use official Node.js LTS image
 FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Copy only package files first (for better caching)
+# Copy package files and install deps
 COPY package*.json ./
-
-# Install only production dependencies
 RUN npm install --production
 
-# Copy rest of the app
+# Copy app source
 COPY . .
 
-# Expose the application port
-EXPOSE 4000
+# Set environment variable for production
+ENV NODE_ENV=production
 
-# Run the app
+# Expose the port (match the one in your app)
+EXPOSE 5000
+
+# Start the app
 CMD ["npm", "start"]
