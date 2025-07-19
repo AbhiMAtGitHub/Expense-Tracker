@@ -17,7 +17,7 @@ const swaggerDocument = YAML.load("./src/docs/swagger.yaml");
 
 app.use(express.json());
 
-app.use(helmet());
+app.use(helmet()); //
 app.use(limiter);
 
 app.use(requestLogger);
