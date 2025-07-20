@@ -43,8 +43,8 @@ jobs:
           container-name: expense-tracker-container
           image: ${{ steps.build-image.outputs.image }}
           environment-variables: |
-            MONGO_URI="${{ secrets.MONGO_URI }}"
-            JWT_SECRET="${{ secrets.JWT_SECRET }}"
+            MONGO_URI=${{ secrets.MONGO_URI }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
             NODE_ENV=production
             PORT=5000
 
