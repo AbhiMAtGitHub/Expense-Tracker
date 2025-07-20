@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const routes = require("./routes");
+const path = require("path");
 const [
   requestLogger,
   morganLogger,
@@ -13,11 +14,15 @@ const { limiter } = require("./utils/common");
 
 const swaggerUi = require("swagger-ui-express");
 const YAML = require("yamljs");
-const swaggerDocument = YAML.load("./src/docs/swagger.yaml");
+const swaggerDocument = YAML.load(path.join(__dirname, "/docs/swagger.yaml"));
 
 app.use(express.json());
 
-app.use(helmet()); //
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 app.use(limiter);
 
 app.use(requestLogger);
@@ -32,8 +37,6 @@ app.get("/api/break-it", (req, res, next) => {
 });
 
 app.get("/api/ping", (req, res) => res.status(200).send("pong"));
-
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req, res) => {
   res.status(200).send(`
