@@ -33,7 +33,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/expense-tracker",
+          "awslogs-group": "/ecs/expense-tracker-task",
           "awslogs-region": "ap-south-1",
           "awslogs-stream-prefix": "ecs"
         }
