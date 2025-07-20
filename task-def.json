@@ -5,7 +5,12 @@
     {
       "name": "expense-tracker",
       "image": "REPLACE_IMAGE_URI",
-      "portMappings": [{ "containerPort": 5000, "protocol": "tcp" }],
+      "portMappings": [
+        {
+          "containerPort": 5000,
+          "protocol": "tcp"
+        }
+      ],
       "environment": [
         {
           "name": "MONGO_URI",
@@ -24,7 +29,15 @@
           "value": "5000"
         }
       ],
-      "essential": true
+      "essential": true,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/expense-tracker",
+          "awslogs-region": "ap-south-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
     }
   ],
   "requiresCompatibilities": ["FARGATE"],
