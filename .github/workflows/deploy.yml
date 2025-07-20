@@ -40,7 +40,7 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ecs-task-def.json
-          container-name: expense-tracker
+          container-name: expense-tracker-container
           image: ${{ steps.build-image.outputs.image }}
           environment-variables: |
             MONGO_URI="${{ secrets.MONGO_URI }}"
