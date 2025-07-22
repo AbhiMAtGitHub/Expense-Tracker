@@ -3,12 +3,12 @@ const {
   getTransactions,
   deleteTransaction,
   updateTransaction,
-} = require("../services/transaction.service");
+} = require('../services/transaction.service');
 const {
   createMultipleTransactions,
-} = require("../services/transaction.service");
-const { setPaginationHeaders } = require("../utils/common");
-const { validateTransaction } = require("../utils/validate");
+} = require('../services/transaction.service');
+const { setPaginationHeaders } = require('../utils/common');
+const { validateTransaction } = require('../utils/validate');
 
 exports.createTransaction = async (req, res, next) => {
   try {
@@ -56,8 +56,8 @@ exports.update = async (req, res, next) => {
 exports.remove = async (req, res, next) => {
   try {
     const userId = req.user;
-    const data = await deleteTransaction(req.params.id, userId);
-    res.status(200).json({ success: true, message: "Deleted" });
+    await deleteTransaction(req.params.id, userId);
+    res.status(200).json({ success: true, message: 'Deleted' });
   } catch (err) {
     next(err);
   }

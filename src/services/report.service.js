@@ -1,6 +1,6 @@
 // src/services/report.service.js
-const Transaction = require("../models/transaction.model");
-const mongoose = require("mongoose");
+const Transaction = require('../models/transaction.model');
+const mongoose = require('mongoose');
 
 exports.getMonthlySummary = async (userId, year, category) => {
   const start = new Date(`${year}-01-01`);
@@ -17,19 +17,19 @@ exports.getMonthlySummary = async (userId, year, category) => {
     {
       $group: {
         _id: {
-          month: { $month: "$date" },
-          type: "$type",
+          month: { $month: '$date' },
+          type: '$type',
         },
-        total: { $sum: "$amount" },
+        total: { $sum: '$amount' },
       },
     },
     {
       $group: {
-        _id: "$_id.month",
+        _id: '$_id.month',
         breakdown: {
           $push: {
-            type: "$_id.type",
-            total: "$total",
+            type: '$_id.type',
+            total: '$total',
           },
         },
       },
@@ -39,8 +39,8 @@ exports.getMonthlySummary = async (userId, year, category) => {
 
   return result.map((entry) => ({
     month: entry._id,
-    income: entry.breakdown.find((b) => b.type === "income")?.total || 0,
-    expense: entry.breakdown.find((b) => b.type === "expense")?.total || 0,
+    income: entry.breakdown.find((b) => b.type === 'income')?.total || 0,
+    expense: entry.breakdown.find((b) => b.type === 'expense')?.total || 0,
   }));
 };
 
@@ -53,19 +53,19 @@ exports.getYearlySummary = async (userId, category) => {
     {
       $group: {
         _id: {
-          year: { $year: "$date" },
-          type: "$type",
+          year: { $year: '$date' },
+          type: '$type',
         },
-        total: { $sum: "$amount" },
+        total: { $sum: '$amount' },
       },
     },
     {
       $group: {
-        _id: "$_id.year",
+        _id: '$_id.year',
         breakdown: {
           $push: {
-            type: "$_id.type",
-            total: "$total",
+            type: '$_id.type',
+            total: '$total',
           },
         },
       },
@@ -75,7 +75,7 @@ exports.getYearlySummary = async (userId, category) => {
 
   return result.map((entry) => ({
     year: entry._id,
-    income: entry.breakdown.find((b) => b.type === "income")?.total || 0,
-    expense: entry.breakdown.find((b) => b.type === "expense")?.total || 0,
+    income: entry.breakdown.find((b) => b.type === 'income')?.total || 0,
+    expense: entry.breakdown.find((b) => b.type === 'expense')?.total || 0,
   }));
 };

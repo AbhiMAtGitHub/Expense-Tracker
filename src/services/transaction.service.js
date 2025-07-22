@@ -1,5 +1,5 @@
-const Transaction = require("../models/transaction.model");
-const { buildPaginationQuery } = require("../utils/common");
+const Transaction = require('../models/transaction.model');
+const { buildPaginationQuery } = require('../utils/common');
 
 exports.createTransaction = async (body, userId) => {
   const { title, amount, type, category, date } = body;
@@ -52,13 +52,13 @@ exports.updateTransaction = async (id, update, userId) => {
     { new: true }
   );
   if (!updated)
-    throw new Error("Transaction not found or you do not have permission.");
+    throw new Error('Transaction not found or you do not have permission.');
   return updated;
 };
 
 exports.deleteTransaction = async (id, userId) => {
   const deleted = await Transaction.findOneAndDelete({ _id: id, userId });
   if (!deleted)
-    throw new Error("Transaction not found or you do not have permission.");
+    throw new Error('Transaction not found or you do not have permission.');
   return true;
 };

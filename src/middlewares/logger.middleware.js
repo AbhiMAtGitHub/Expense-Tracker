@@ -1,13 +1,13 @@
-const morgan = require("morgan");
-const winston = require("winston");
+const morgan = require('morgan');
+const winston = require('winston');
 
 // ANSI color codes
 const color = {
-  blue: "\x1b[34m",
-  green: "\x1b[32m",
-  red: "\x1b[31m",
-  yellow: "\x1b[33m",
-  reset: "\x1b[0m",
+  blue: '\x1b[34m',
+  green: '\x1b[32m',
+  red: '\x1b[31m',
+  yellow: '\x1b[33m',
+  reset: '\x1b[0m',
 };
 
 // Setup Winston logger
@@ -33,7 +33,7 @@ const requestLogger = (req, res, next) => {
   console.log(`${color.blue}[REQUEST] ${method} ${originalUrl}${color.reset}`);
 
   // Wait for response to finish
-  res.on("finish", () => {
+  res.on('finish', () => {
     const duration = Date.now() - start;
     const logMsg = `[RESPONSE] ${method} ${originalUrl} - ${res.statusCode} (${duration}ms)`;
 
@@ -41,8 +41,8 @@ const requestLogger = (req, res, next) => {
       res.statusCode >= 500
         ? color.red
         : res.statusCode >= 400
-        ? color.yellow
-        : color.green;
+          ? color.yellow
+          : color.green;
 
     console.log(`${statusColor}${logMsg}${color.reset}`);
   });
@@ -51,7 +51,7 @@ const requestLogger = (req, res, next) => {
 };
 
 // Morgan for concise logs (CloudWatch-friendly)
-const morganLogger = morgan("tiny", {
+const morganLogger = morgan('tiny', {
   stream: {
     write: (message) => logger.info(message.trim()),
   },

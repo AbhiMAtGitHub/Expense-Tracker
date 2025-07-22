@@ -52,11 +52,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AuthRequest"
+              $ref: '#/components/schemas/AuthRequest'
       responses:
-        "201":
+        '201':
           description: User created
-        "400":
+        '400':
           description: Bad request
 
   /api/auth/login:
@@ -67,9 +67,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AuthRequest"
+              $ref: '#/components/schemas/AuthRequest'
       responses:
-        "200":
+        '200':
           description: Successful login
 
   /api/transactions:
@@ -83,12 +83,12 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: "#/components/schemas/Transaction"
+                - $ref: '#/components/schemas/Transaction'
                 - type: array
                   items:
-                    $ref: "#/components/schemas/Transaction"
+                    $ref: '#/components/schemas/Transaction'
       responses:
-        "201":
+        '201':
           description: Created successfully
     get:
       summary: Get all transactions
@@ -104,7 +104,7 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
+        '200':
           description: OK
 
   /api/reports/monthly:
@@ -119,7 +119,7 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
+        '200':
           description: Monthly breakdown
 
   /api/reports/yearly:
@@ -128,7 +128,7 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        "200":
+        '200':
           description: Yearly breakdown
 
   /api/transactions/{id}:
@@ -148,15 +148,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Transaction"
+              $ref: '#/components/schemas/Transaction'
       responses:
-        "200":
+        '200':
           description: Transaction updated successfully
-        "400":
+        '400':
           description: Bad request
-        "401":
+        '401':
           description: Unauthorized
-        "404":
+        '404':
           description: Transaction not found
 
     delete:
@@ -171,9 +171,9 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Transaction deleted successfully
-        "401":
+        '401':
           description: Unauthorized
-        "404":
+        '404':
           description: Transaction not found

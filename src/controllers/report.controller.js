@@ -2,13 +2,13 @@
 const {
   getMonthlySummary,
   getYearlySummary,
-} = require("../services/report.service");
+} = require('../services/report.service');
 
 exports.monthly = async (req, res, next) => {
   try {
     const year = parseInt(req.query.year);
     if (!year || year < 1970 || year > 2100) {
-      return res.status(400).json({ message: "Invalid or missing year" });
+      return res.status(400).json({ message: 'Invalid or missing year' });
     }
 
     const category = req.query.category;
